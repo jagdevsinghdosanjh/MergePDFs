@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>MergePDFs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to MergePDFs</h1>
+    <form action="/merge" method="POST" enctype="multipart/form-data">
+        <input type="file" name="pdfs" multiple>
+        <button type="submit">Merge PDFs</button>
+    </form>
+</body>
+</html>
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <title>Merge PDFs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +24,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <img src="./static/OIP.jpg" alt="Hey">
+ <img src="{{ url_for('static', filename='OIP.jpeg') }}" alt="Banner" height="80">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
       <ul>
@@ -31,4 +47,4 @@
   </footer>
 
 </body>
-</html>
+</html> {% endcomment %}
