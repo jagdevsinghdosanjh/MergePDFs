@@ -4,16 +4,12 @@
   <meta charset="UTF-8">
   <title>Merge PDFs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
-  <header>
-    <img src="logo.svg" alt="MergePDFs LOGO" height="60">
-   <h2>Merge PDFs Instantly</h2>
-  </header>
-
-  {% with messages = get_flashed_messages() %}
+  <img src="./static/OIP.jpg" alt="Hey">
+    {% with messages = get_flashed_messages() %}
     {% if messages %}
       <ul>
         {% for msg in messages %}
