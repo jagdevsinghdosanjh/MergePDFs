@@ -1,0 +1,8 @@
+venv/
+.vscode/
+*.pyc
+__pycache__/
+user_logs.json
+image.png
+*.log
+temp_uploads/

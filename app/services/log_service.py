@@ -1,27 +1,30 @@
-import json
-from datetime import datetime
 from user_agents import parse as ua_parse
+import json
+import os
 
-LOG_FILE = 'user_logs.json'
+def log_user_info(req):
+    ip = req.remote_addr
+    user_agent_str = req.headers.get('User-Agent', '')
+    ua = ua_parse(user_agent_str)
 
-def log_user_info(request):
-    ip = request.remote_addr
-    ua = ua_parse(request.headers.get('User-Agent', ''))
-
-    log_entry = {
-        'timestamp': datetime.utcnow().isoformat(),
+    log = {
         'ip': ip,
         'device': ua.device.family,
         'os': ua.os.family,
         'browser': ua.browser.family
     }
 
-    with open(LOG_FILE, 'a') as f:
-        f.write(json.dumps(log_entry) + '\n')
+    log_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'user_logs.json'))
+    logs = []
 
-def read_logs():
-    try:
-        with open(LOG_FILE, 'r') as f:
-            return [json.loads(line) for line in f.readlines()]
-    except FileNotFoundError:
-        return []
+    if os.path.exists(log_path):
+        with open(log_path, 'r') as f:
+            try:
+                logs = json.load(f)
+            except json.JSONDecodeError:
+                logs = []
+
+    logs.append(log)
+
+    with open(log_path, 'w') as f:
+        json.dump(logs, f, indent=2)

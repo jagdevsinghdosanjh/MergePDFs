@@ -10,7 +10,9 @@ def register_routes(app):
             return render_template('index.html')
 
         try:
-            log_user_info(request)
+            user_agent = request.headers.get('User-Agent')
+            log_user_info(user_agent)
+
             pdfs = request.files.getlist('pdfs')
             if not pdfs:
                 return "No files uploaded", 400

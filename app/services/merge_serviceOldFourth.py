@@ -2,7 +2,7 @@ from pypdf import PdfReader, PdfWriter
 import os
 
 def merge_pdfs(files):
-    temp_dir = '/tmp'  # Required for write access on Vercel
+    temp_dir = '/tmp'  # Vercel's writable directory
     writer = PdfWriter()
 
     for file in files:
