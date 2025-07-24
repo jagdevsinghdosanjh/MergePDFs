@@ -37,6 +37,9 @@ MergePDFs/
 ├── requirements.txt             # Python dependencies
 ├── vercel.json                  # Vercel deployment configuration
 └── README.md                    # Project documentation
+
+![alt text](image.png)
+
 ⚙️ Installation
 bash
 python -m venv venv
