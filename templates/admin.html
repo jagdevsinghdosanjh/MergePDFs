@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><title>Admin Dashboard</title></head>
+<body>
+  <h1>User Log</h1>
+  <ul>
+    {% for log in logs %}
+      <li>{{ log.timestamp }} - {{ log.ip }} - {{ log.device }} - {{ log.os }} - {{ log.browser }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
