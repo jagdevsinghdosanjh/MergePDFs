@@ -1,18 +1,30 @@
-from flask import request, render_template, send_file
+from flask import render_template, request, send_file
 from app.services.merge_service import merge_pdfs
 from app.services.log_service import log_user_info
+import traceback
 
 def register_routes(app):
     @app.route('/', methods=['GET', 'POST'])
     def home():
-        if request.method == 'POST':
-            log_user_info(request)
-            output_path = merge_pdfs(request.files.getlist('pdfs'))
-            return send_file(output_path, as_attachment=True)
-        return render_template('index.html')
+        if request.method == 'GET':
+            return render_template('index.html')
 
-    @app.route('/admin')
+        try:
+            user_agent = request.headers.get('User-Agent')
+            log_user_info(user_agent)
+
+            pdfs = request.files.getlist('pdfs')
+            if not pdfs:
+                return "No files uploaded", 400
+
+            output_path = merge_pdfs(pdfs)
+            return send_file(output_path, as_attachment=True)
+
+        except Exception as e:
+            print("Error:", e)
+            traceback.print_exc()
+            return "Internal Server Error", 500
+
+    @app.route('/admin', methods=['GET'])
     def admin():
-        from app.services.log_service import read_logs
-        logs = read_logs()
-        return render_template('admin.html', logs=logs)
+        return render_template('admin.html')

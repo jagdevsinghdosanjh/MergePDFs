@@ -2,16 +2,13 @@ from pypdf import PdfReader, PdfWriter
 import os
 
 def merge_pdfs(files):
-    # Get current working directory (project root)
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    temp_dir = os.path.join(base_dir, 'temp_uploads')
-    os.makedirs(temp_dir, exist_ok=True)
-
+    temp_dir = '/tmp'  # Vercel's writable directory
     writer = PdfWriter()
 
     for file in files:
         path = os.path.join(temp_dir, file.filename)
         file.save(path)
+
         reader = PdfReader(path)
         for page in reader.pages:
             writer.add_page(page)
