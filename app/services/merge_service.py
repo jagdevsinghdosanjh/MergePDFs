@@ -1,17 +1,23 @@
-from pypdf import PdfMerger
+from pypdf import PdfReader, PdfWriter
 import os
 
 def merge_pdfs(files):
-    temp_dir = 'temp_uploads'
+    # Get current working directory (project root)
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    temp_dir = os.path.join(base_dir, 'temp_uploads')
     os.makedirs(temp_dir, exist_ok=True)
-    merger = PdfMerger()
+
+    writer = PdfWriter()
 
     for file in files:
         path = os.path.join(temp_dir, file.filename)
         file.save(path)
-        merger.append(path)
+        reader = PdfReader(path)
+        for page in reader.pages:
+            writer.add_page(page)
 
     output_path = os.path.join(temp_dir, 'merged.pdf')
-    merger.write(output_path)
-    merger.close()
+    with open(output_path, 'wb') as f:
+        writer.write(f)
+
     return output_path
