@@ -1,10 +1,8 @@
 from pypdf import PdfReader, PdfWriter
 import os
-import tempfile
 
 def merge_pdfs(files):
-    # Use OS-safe temp directory
-    temp_dir = tempfile.gettempdir()
+    temp_dir = '/tmp'  # Required for write access on Vercel
     writer = PdfWriter()
 
     for file in files:
