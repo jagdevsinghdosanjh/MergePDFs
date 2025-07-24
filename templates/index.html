@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>MergePDFs</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Welcome to MergePDFs</h1>
@@ -13,38 +12,3 @@
     </form>
 </body>
 </html>
-
-{% comment %} <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Merge PDFs</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
- <img src="{{ url_for('static', filename='OIP.jpeg') }}" alt="Banner" height="80">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-        {% for msg in messages %}
-          <li>{{ msg }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-
-  <form action="/" method="POST" enctype="multipart/form-data" novalidate>
-    <input type="file" name="pdfs" multiple accept="application/pdf" required>
-    <button type="submit">Merge & Download</button>
-  </form>
-
-  <footer>
-    <p>Built by Jagdev Singh Dosanjh — 
-      <a href="https://github.com/jagdevsinghdosanjh/mergepdfs" target="_blank">View on GitHub</a>
-    </p>
-  </footer>
-
-</body>
-</html> {% endcomment %}
