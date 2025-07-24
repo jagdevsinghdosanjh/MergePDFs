@@ -15,15 +15,8 @@ def register_routes(app):
             if not pdfs:
                 return "No files uploaded", 400
 
-            # Use in-memory BytesIO stream from merge_pdfs
-            output_stream = merge_pdfs(pdfs)
-
-            return send_file(
-                output_stream,
-                as_attachment=True,
-                download_name='merged.pdf',
-                mimetype='application/pdf'
-            )
+            output_path = merge_pdfs(pdfs)
+            return send_file(output_path, as_attachment=True)
 
         except Exception as e:
             print("Error:", e)

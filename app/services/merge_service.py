@@ -1,22 +1,15 @@
 from pypdf import PdfReader, PdfWriter
-import os
-import tempfile
+from io import BytesIO
 
 def merge_pdfs(files):
-    # Use OS-safe temp directory
-    temp_dir = tempfile.gettempdir()
     writer = PdfWriter()
 
     for file in files:
-        path = os.path.join(temp_dir, file.filename)
-        file.save(path)
-
-        reader = PdfReader(path)
+        reader = PdfReader(file)
         for page in reader.pages:
             writer.add_page(page)
 
-    output_path = os.path.join(temp_dir, 'merged.pdf')
-    with open(output_path, 'wb') as f:
-        writer.write(f)
-
-    return output_path
+    output_stream = BytesIO()
+    writer.write(output_stream)
+    output_stream.seek(0)
+    return output_stream
