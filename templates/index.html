@@ -6,6 +6,16 @@
 </head>
 <body>
   <h2>Merge PDFs</h2>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul style="color: red;">
+      {% for msg in messages %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
   <form action="/" method="POST" enctype="multipart/form-data">
     <input type="file" name="pdfs" multiple accept="application/pdf" required>
     <button type="submit">Merge & Download</button>
