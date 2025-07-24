@@ -3,22 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <title>Merge PDFs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+   <header>
+    <img src="{{ url_for('static', filename='logo.svg') }}" alt="MergePDFs Logo" height="60">
+    <h2>Merge PDFs Instantly</h2>
+  </header>
   <h2>Merge PDFs</h2>
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul style="color: red;">
-      {% for msg in messages %}
-        <li>{{ msg }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
 
-  <form action="/" method="POST" enctype="multipart/form-data">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul style="color: red;">
+        {% for msg in messages %}
+          <li>{{ msg }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form action="/" method="POST" enctype="multipart/form-data" novalidate>
     <input type="file" name="pdfs" multiple accept="application/pdf" required>
     <button type="submit">Merge & Download</button>
   </form>
+    <footer>
+    <p>Built by Jagdev Singh Dosanjh — <a href="https://github.com/yourusername/mergepdfs" target="_blank">View on GitHub</a></p>
+  </footer>
 </body>
 </html>

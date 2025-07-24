@@ -2,6 +2,8 @@ from flask import render_template, request, send_file, flash, redirect, url_for
 from app.services.merge_service import merge_pdfs
 from app.services.log_service import log_user_info
 import traceback
+import json
+import os
 
 def register_routes(app):
     @app.route('/', methods=['GET', 'POST'])
@@ -26,11 +28,21 @@ def register_routes(app):
             )
 
         except Exception as e:
-            print("Error:", e)
+            print("Error during merge:", e)
             traceback.print_exc()
             flash("Something went wrong while merging. Please try again.")
             return redirect(url_for('home'))
 
     @app.route('/admin', methods=['GET'])
     def admin():
-        return render_template('admin.html')
+        log_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'user_logs.json'))
+        logs = []
+        if os.path.exists(log_path):
+            with open(log_path, 'r') as f:
+                try:
+                    logs = json.load(f)
+                except json.JSONDecodeError:
+                    logs = []
+        for entry in logs:
+            entry['timestamp'] = 'now'
+        return render_template('admin.html', logs=logs)
